@@ -3,6 +3,7 @@ package de.janisworld.restingblocks;
 import java.io.File;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,6 +30,7 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 				"&7[&c&l-&7] &8" + getDescription().getName() + " is disabled."));
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onEnable() {
 		console = getServer().getConsoleSender();
@@ -49,6 +51,23 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 			getConfig().options().copyDefaults(true);
 			saveConfig();
 		}
+		
+		Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+			
+			public void run() {
+				for(Player p : Bukkit.getOnlinePlayers()){
+					for(String a : getConfig().getStringList("RestingBlocks.rests")){
+						int x = p.getLocation().getBlockX();
+						int y = p.getLocation().getBlockY();
+						int z = p.getLocation().getBlockZ();
+						if(a.equals(x+"#"+y+"#"+z)){
+							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 20, 2, true, true, Color.LIME));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 2, true, true, Color.LIME));
+						}
+					}
+				}
+			}
+		}, 0L, 20L);
 	}
 
 	@Override
@@ -96,20 +115,6 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 		}
 		p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("RestingBlocks.prefix")+" You haven't the right permission."));
 		return true;
-	}
-
-	@EventHandler
-	public void onMove(PlayerMoveEvent e){
-		Player p = e.getPlayer();
-		for(String a : getConfig().getStringList("RestingBlocks.rests")){
-			int x = p.getLocation().getBlockX();
-			int y = p.getLocation().getBlockY();
-			int z = p.getLocation().getBlockZ();
-			if(a.equals(x+"#"+y+"#"+z)){
-				p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 20, 2, true, true, Color.LIME));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 2, true, true, Color.LIME));
-			}
-		}
 	}
 	
 }
