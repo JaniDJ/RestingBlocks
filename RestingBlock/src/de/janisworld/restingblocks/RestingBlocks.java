@@ -4,15 +4,12 @@ import java.io.File;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -30,7 +27,6 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 				"&7[&c&l-&7] &8" + getDescription().getName() + " is disabled."));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onEnable() {
 		console = getServer().getConsoleSender();
@@ -52,7 +48,7 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 			saveConfig();
 		}
 		
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			
 			public void run() {
 				for(Player p : Bukkit.getOnlinePlayers()){
@@ -61,8 +57,8 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 						int y = p.getLocation().getBlockY();
 						int z = p.getLocation().getBlockZ();
 						if(a.equals(x+"#"+y+"#"+z)){
-							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 20, 2, true, true, Color.LIME));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 2, true, true, Color.LIME));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20, 0, true, true));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 0, true, true));
 						}
 					}
 				}
