@@ -12,3 +12,4 @@ commands:
     permission: restingblocks
 permissions:
   restingblock:
+    description: Gives access to all RestingBlocks commands
