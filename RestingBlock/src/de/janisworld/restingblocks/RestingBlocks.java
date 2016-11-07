@@ -43,6 +43,8 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 		if (!new File(getDataFolder(), "config.yml").exists()) {
 			getDataFolder().mkdir();
 			getConfig().addDefault("RestingBlocks.enabled", true);
+			getConfig().addDefault("RestingBlocks.regenerationLvL", 1);
+			getConfig().addDefault("RestingBlocks.saturationLvL", 1);
 			getConfig().addDefault("RestingBlocks.prefix", "&7[&6RestingBlocks&7]");
 			getConfig().options().copyDefaults(true);
 			saveConfig();
@@ -57,8 +59,8 @@ public class RestingBlocks extends JavaPlugin implements Listener, CommandExecut
 						int y = p.getLocation().getBlockY();
 						int z = p.getLocation().getBlockZ();
 						if(a.equals(x+"#"+y+"#"+z)){
-							p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20, 0, true, true));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 0, true, true));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20, (getConfig().getInt("RestingBlocks.regenerationLvL",1)-1) >= 0 ? (getConfig().getInt("RestingBlocks.regenerationLvL",1)-1) : 0, true, true));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, (getConfig().getInt("RestingBlocks.saturationLvL",1)-1) >= 0 ? (getConfig().getInt("RestingBlocks.saturationLvL",1)-1) : 0, true, true));
 						}
 					}
 				}
