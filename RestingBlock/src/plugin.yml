@@ -12,4 +12,3 @@ commands:
     permission: restingblocks
 permissions:
   restingblock:
-    default: op
