@@ -11,5 +11,5 @@ commands:
     usage: /delRest
     permission: restingblocks
 permissions:
-  restingblock:
+  restingblocks:
     description: Gives access to all RestingBlocks commands
