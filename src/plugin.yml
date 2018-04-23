@@ -1,0 +1,15 @@
+name: RestingBlocks
+version: 1.0
+author: JaniDJ
+main: de.janisworld.restingblocks.RestingBlocks
+depend: []
+commands:
+  addRest:
+    usage: /addRest
+    permission: restingblocks
+  delRest:
+    usage: /delRest
+    permission: restingblocks
+permissions:
+  restingblocks:
+    description: Gives access to all RestingBlocks commands
